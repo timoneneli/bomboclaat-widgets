@@ -13,6 +13,14 @@
       };
     in
     {
+      devShell = {
+        x86_64-linux = devenv.lib.mkShell {
+          inputs = inputs // { nixpkgs = nixpkgs; };
+          pkgs = unstable-pkgs-linux;
+          modules = [ ./devenv.nix ];
+        };
+      };
+
       homeManagerModules = {
         default = self.homeManagerModules.ags;
         bomboclaat-widgets = import ./src self;

@@ -1,16 +1,26 @@
-{pkgs, inputs, ...}: {
+{ pkgs, inputs, lib, config, ... }: {
   imports = [ inputs.ags.homeManagerModules.default ];
 
-  programs.ags = {
-    enable = true;
+  options = {
+    bomboclaat = {
+      enable = lib.mkEnableOption "Enable Bomboclaat";
+      eli = lib.mkEnableOption "Timon of Eli?????";
+    };
+  };
 
-    configDir = ../ags-widgets;
+  config = lib.mkIf config.bomboclaat.enable {
+    programs.ags = {
+      enable = lib.mkDefault true;
 
-    extraPackages = with pkgs; [
-      gtksourceview
-      webkitgtk
-      accountsservice
-    ];
+      configDir = ../ags-widgets;
+
+      extraPackages = with pkgs; [
+        gtksourceview
+        webkitgtk
+        accountsservice
+      ];
+    };
+
   };
 
 }
